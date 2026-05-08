@@ -14,7 +14,9 @@ import SwiftUI
 
 #if TEXTUAL_ENABLE_TEXT_SELECTION
   @Observable
-  final class TextSelectionCoordinator {
+  final class TextSelectionCoordinator: @unchecked Sendable {
+    static let shared = TextSelectionCoordinator()
+
     private var models: [WeakBox<TextSelectionModel>] = []
 
     func register(_ model: TextSelectionModel) {
@@ -39,13 +41,11 @@ import SwiftUI
 #endif
 
 struct TextSelectionCoordination: ViewModifier {
-  #if TEXTUAL_ENABLE_TEXT_SELECTION
-    @State private var coordinator = TextSelectionCoordinator()
-  #endif
 
   func body(content: Content) -> some View {
     #if TEXTUAL_ENABLE_TEXT_SELECTION
       content.environment(coordinator)
+      content.environment(TextSelectionCoordinator.shared)
     #else
       content
     #endif
