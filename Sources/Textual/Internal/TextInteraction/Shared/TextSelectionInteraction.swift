@@ -26,7 +26,7 @@ struct TextSelectionInteraction: ViewModifier {
           .overlayTextLayoutCollection { layoutCollection in
             Color.clear
               .onChange(of: AnyTextLayoutCollection(layoutCollection), initial: true) {
-                model.setCoordinator(coordinator ?? .shared)
+                model.setCoordinator(coordinator)
                 model.setLayoutCollection(layoutCollection)
               }
           }
